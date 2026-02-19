@@ -5,6 +5,7 @@
     {"slug": "dublincore", "label": "Rpg-schema", "namespace": "dc", "description":"Dublin Core for document description", "path":"dc.ttl", "tags":[] },
     {"slug": "schemaorg", "label": "Rpg-schema", "namespace": "schema", "description":"Schema.org for all things", "path":"schemaorg.ttl", "tags":[] },
     {"slug": "fitd", "label": "Forged in the Dark schema", "namespace": "fitd", "description":"Forged in the dark SRD schema", "path":"fitd.ttl", "tags":[] },
+    {"slug": "cbrpnk", "label": "CBR+PNK SRD schema", "namespace": "fitd", "description":"CBR+PNK SRD schema", "path":"cbrpnk.ttl", "tags":[] },
     {"slug": "gumshoe", "label": "Gumshoe schema", "namespace": "gumshoe", "description":"Gumshoe SRD schema", "path":"gumshoe_srd.ttl", "tags":[] }
   ]
 }
