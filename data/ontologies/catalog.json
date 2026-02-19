@@ -4,6 +4,7 @@
     {"slug": "foaf", "label": "Rpg-schema", "namespace": "foaf", "description":"Friend of a Friendd", "path":"foaf.ttl", "tags":[] },
     {"slug": "dublincore", "label": "Rpg-schema", "namespace": "dc", "description":"Dublin Core for document description", "path":"dc.ttl", "tags":[] },
     {"slug": "schemaorg", "label": "Rpg-schema", "namespace": "schema", "description":"Schema.org for all things", "path":"schemaorg.ttl", "tags":[] },
+    {"slug": "fitd", "label": "Forged in the Dark schema", "namespace": "fitd", "description":"Forged in the dark SRD schema", "path":"fitd.ttl", "tags":[] },
     {"slug": "gumshoe", "label": "Gumshoe schema", "namespace": "gumshoe", "description":"Gumshoe SRD schema", "path":"gumshoe_srd.ttl", "tags":[] }
   ]
 }
