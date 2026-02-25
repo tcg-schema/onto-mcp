@@ -1,0 +1,661 @@
+@prefix tcg:    <https://www.tcg-schema.org/core#> .
+@prefix schema: <https://schema.org/> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+
+<https://www.tcg-schema.org/core>
+  a owl:Ontology ;
+  rdfs:label "TCG Schema — Core"@en ;
+  rdfs:comment "Core vocabulary for card games / trading card games / collectible card games, aligned with schema.org. Includes cards vs printings, sets, decks, formats, legality, mechanics, counters, resources, metagame archetypes/matchups, and LLM-friendly descriptors."@en ;
+  owl:imports <https://schema.org/> .
+
+################
+# CORE CLASSES #
+################
+
+tcg:CardGame a rdfs:Class ;
+  rdfs:label "CardGame"@en ;
+  rdfs:subClassOf schema:Game .
+
+tcg:CardSet a rdfs:Class ;
+  rdfs:label "CardSet"@en ;
+  rdfs:subClassOf schema:CreativeWork .
+
+tcg:ProductRelease a rdfs:Class ;
+  rdfs:label "ProductRelease"@en ;
+  rdfs:subClassOf schema:Product .
+
+tcg:Card a rdfs:Class ;
+  rdfs:label "Card"@en ;
+  rdfs:comment "Abstract card identity (concept), independent from specific printings."@en ;
+  rdfs:subClassOf schema:CreativeWork .
+
+tcg:CardFace a rdfs:Class ;
+  rdfs:label "CardFace"@en ;
+  rdfs:comment "A face/part of a card (double-faced, split, modal, etc.)."@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:CardPrinting a rdfs:Class ;
+  rdfs:label "CardPrinting"@en ;
+  rdfs:comment "A specific printing/variant (set, number, language, finish, etc.)."@en ;
+  rdfs:subClassOf schema:Product .
+
+tcg:Deck a rdfs:Class ;
+  rdfs:label "Deck"@en ;
+  rdfs:subClassOf schema:CreativeWork .
+
+tcg:DeckListEntry a rdfs:Class ;
+  rdfs:label "DeckListEntry"@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:Format a rdfs:Class ;
+  rdfs:label "Format"@en ;
+  rdfs:subClassOf schema:DefinedTerm .
+
+tcg:Legality a rdfs:Class ;
+  rdfs:label "Legality"@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:Mechanic a rdfs:Class ;
+  rdfs:label "Mechanic"@en ;
+  rdfs:comment "Named mechanic (keyword ability/action, resource system concept, etc.)."@en ;
+  rdfs:subClassOf schema:DefinedTerm .
+
+tcg:Ability a rdfs:Class ;
+  rdfs:label "Ability"@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:Effect a rdfs:Class ;
+  rdfs:label "Effect"@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:CounterType a rdfs:Class ;
+  rdfs:label "CounterType"@en ;
+  rdfs:comment "Counters as game objects (e.g., +1/+1, poison, charge)."@en ;
+  rdfs:subClassOf schema:DefinedTerm .
+
+tcg:CounterEffect a rdfs:Class ;
+  rdfs:label "CounterEffect"@en ;
+  rdfs:subClassOf tcg:Effect .
+
+tcg:TargetSelector a rdfs:Class ;
+  rdfs:label "TargetSelector"@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:Condition a rdfs:Class ;
+  rdfs:label "Condition"@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:Role a rdfs:Class ;
+  rdfs:label "Role"@en ;
+  rdfs:comment "Functional role of a card in deckbuilding (removal, finisher, engine, etc.)."@en ;
+  rdfs:subClassOf schema:DefinedTerm .
+
+#############################
+# METAGAME / COUNTERPLAY    #
+#############################
+
+tcg:Archetype a rdfs:Class ;
+  rdfs:label "Archetype"@en ;
+  rdfs:comment "Metagame archetype/strategy cluster (often format-dependent)."@en ;
+  rdfs:subClassOf schema:CreativeWork .
+
+tcg:Matchup a rdfs:Class ;
+  rdfs:label "Matchup"@en ;
+  rdfs:comment "A vs B relationship in a format with advantage and evidence."@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:CounterClaim a rdfs:Class ;
+  rdfs:label "CounterClaim"@en ;
+  rdfs:comment "Evidence-bearing claim that something counters something (card/mechanic/archetype) in a format/time window."@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:EvidenceBundle a rdfs:Class ;
+  rdfs:label "EvidenceBundle"@en ;
+  rdfs:subClassOf schema:Intangible .
+
+#############################
+# RESOURCES / COSTS (ABSTRACT)
+#############################
+
+tcg:ResourceSystem a rdfs:Class ;
+  rdfs:label "ResourceSystem"@en ;
+  rdfs:comment "A game's resource system used to pay costs (mana, ink, energy, etc.)."@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:ResourceType a rdfs:Class ;
+  rdfs:label "ResourceType"@en ;
+  rdfs:comment "A resource type within a system (colors, inks, energies, elements, etc.)."@en ;
+  rdfs:subClassOf schema:DefinedTerm .
+
+tcg:ResourceCost a rdfs:Class ;
+  rdfs:label "ResourceCost"@en ;
+  rdfs:comment "A cost expressed in a resource system, structured and/or textual."@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:ResourceCostComponent a rdfs:Class ;
+  rdfs:label "ResourceCostComponent"@en ;
+  rdfs:comment "One component of a cost: amount + optional resource type."@en ;
+  rdfs:subClassOf schema:Intangible .
+
+########################################
+# LLM-FRIENDLY DESCRIPTORS (OPTIONAL)  #
+########################################
+
+tcg:DescriptorType a rdfs:Class ;
+  rdfs:label "DescriptorType"@en ;
+  rdfs:comment "Descriptor category (role, interaction, playPattern, synergyTag, etc.)."@en ;
+  rdfs:subClassOf schema:DefinedTerm .
+
+tcg:CardDescriptor a rdfs:Class ;
+  rdfs:label "CardDescriptor"@en ;
+  rdfs:comment "Descriptor assignment for a card with provenance and confidence."@en ;
+  rdfs:subClassOf schema:Intangible .
+
+tcg:ExtractionMethod a rdfs:Class ;
+  rdfs:label "ExtractionMethod"@en ;
+  rdfs:comment "How a descriptor was produced (regex, LLM, human, consensus, model-vX...)."@en ;
+  rdfs:subClassOf schema:DefinedTerm .
+
+tcg:DescriptorEvidence a rdfs:Class ;
+  rdfs:label "DescriptorEvidence"@en ;
+  rdfs:comment "Evidence supporting a descriptor (snippets, URLs, dataset ids, etc.)."@en ;
+  rdfs:subClassOf schema:CreativeWork .
+
+################
+# PROPERTIES   #
+################
+
+# Common linking
+tcg:inGame a rdf:Property ;
+  rdfs:label "inGame"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range tcg:CardGame .
+
+tcg:inFormat a rdf:Property ;
+  rdfs:label "inFormat"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range tcg:Format .
+
+# Sets / releases
+tcg:setCode a rdf:Property ;
+  rdfs:label "setCode"@en ;
+  rdfs:domain tcg:CardSet ;
+  rdfs:range xsd:string .
+
+tcg:setType a rdf:Property ;
+  rdfs:label "setType"@en ;
+  rdfs:domain tcg:CardSet ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:forSet a rdf:Property ;
+  rdfs:label "forSet"@en ;
+  rdfs:domain tcg:ProductRelease ;
+  rdfs:range tcg:CardSet .
+
+tcg:hasCardSet a rdf:Property ;
+  rdfs:label "hasCardSet"@en ;
+  rdfs:domain tcg:CardGame ;
+  rdfs:range tcg:CardSet .
+
+tcg:hasFormat a rdf:Property ;
+  rdfs:label "hasFormat"@en ;
+  rdfs:domain tcg:CardGame ;
+  rdfs:range tcg:Format .
+
+# Card identity vs printing
+tcg:hasPrinting a rdf:Property ;
+  rdfs:label "hasPrinting"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:CardPrinting .
+
+tcg:printsCard a rdf:Property ;
+  rdfs:label "printsCard"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range tcg:Card .
+
+tcg:inSet a rdf:Property ;
+  rdfs:label "inSet"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range tcg:CardSet .
+
+tcg:collectorNumber a rdf:Property ;
+  rdfs:label "collectorNumber"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range xsd:string .
+
+tcg:rarity a rdf:Property ;
+  rdfs:label "rarity"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:language a rdf:Property ;
+  rdfs:label "language"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range xsd:string .
+
+tcg:finish a rdf:Property ;
+  rdfs:label "finish"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:isFoil a rdf:Property ;
+  rdfs:label "isFoil"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range xsd:boolean .
+
+tcg:artwork a rdf:Property ;
+  rdfs:label "artwork"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range schema:ImageObject .
+
+tcg:artist a rdf:Property ;
+  rdfs:label "artist"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range schema:Person .
+
+tcg:reprintOf a rdf:Property ;
+  rdfs:label "reprintOf"@en ;
+  rdfs:domain tcg:CardPrinting ;
+  rdfs:range tcg:CardPrinting .
+
+# Faces
+tcg:hasFace a rdf:Property ;
+  rdfs:label "hasFace"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:CardFace .
+
+tcg:faceName a rdf:Property ;
+  rdfs:label "faceName"@en ;
+  rdfs:domain tcg:CardFace ;
+  rdfs:range xsd:string .
+
+tcg:faceText a rdf:Property ;
+  rdfs:label "faceText"@en ;
+  rdfs:domain tcg:CardFace ;
+  rdfs:range xsd:string .
+
+# Mechanics / roles / abilities
+tcg:hasMechanic a rdf:Property ;
+  rdfs:label "hasMechanic"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:Mechanic .
+
+tcg:mechanicKind a rdf:Property ;
+  rdfs:label "mechanicKind"@en ;
+  rdfs:domain tcg:Mechanic ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:rulesReference a rdf:Property ;
+  rdfs:label "rulesReference"@en ;
+  rdfs:comment "Reference to rules docs/sections as CreativeWork or URL."@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range schema:CreativeWork .
+
+tcg:hasRole a rdf:Property ;
+  rdfs:label "hasRole"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:Role .
+
+tcg:hasAbility a rdf:Property ;
+  rdfs:label "hasAbility"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:Ability .
+
+tcg:abilityText a rdf:Property ;
+  rdfs:label "abilityText"@en ;
+  rdfs:domain tcg:Ability ;
+  rdfs:range xsd:string .
+
+tcg:abilityType a rdf:Property ;
+  rdfs:label "abilityType"@en ;
+  rdfs:domain tcg:Ability ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:hasEffect a rdf:Property ;
+  rdfs:label "hasEffect"@en ;
+  rdfs:domain tcg:Ability ;
+  rdfs:range tcg:Effect .
+
+tcg:usesMechanic a rdf:Property ;
+  rdfs:label "usesMechanic"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range tcg:Mechanic .
+
+# Counters
+tcg:usesCounterType a rdf:Property ;
+  rdfs:label "usesCounterType"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:CounterType .
+
+tcg:counterScope a rdf:Property ;
+  rdfs:label "counterScope"@en ;
+  rdfs:domain tcg:CounterType ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:counterSemantic a rdf:Property ;
+  rdfs:label "counterSemantic"@en ;
+  rdfs:domain tcg:CounterType ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:counterOperation a rdf:Property ;
+  rdfs:label "counterOperation"@en ;
+  rdfs:domain tcg:CounterEffect ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:counterType a rdf:Property ;
+  rdfs:label "counterType"@en ;
+  rdfs:domain tcg:CounterEffect ;
+  rdfs:range tcg:CounterType .
+
+tcg:amount a rdf:Property ;
+  rdfs:label "amount"@en ;
+  rdfs:domain tcg:Effect ;
+  rdfs:range schema:Number .
+
+tcg:targetSelector a rdf:Property ;
+  rdfs:label "targetSelector"@en ;
+  rdfs:domain tcg:Effect ;
+  rdfs:range tcg:TargetSelector .
+
+tcg:selectorText a rdf:Property ;
+  rdfs:label "selectorText"@en ;
+  rdfs:domain tcg:TargetSelector ;
+  rdfs:range xsd:string .
+
+tcg:condition a rdf:Property ;
+  rdfs:label "condition"@en ;
+  rdfs:domain tcg:Effect ;
+  rdfs:range tcg:Condition .
+
+# Resources / costs (abstract)
+tcg:hasResourceSystem a rdf:Property ;
+  rdfs:label "hasResourceSystem"@en ;
+  rdfs:domain tcg:CardGame ;
+  rdfs:range tcg:ResourceSystem .
+
+tcg:resourceSystem a rdf:Property ;
+  rdfs:label "resourceSystem"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range tcg:ResourceSystem .
+
+tcg:hasCost a rdf:Property ;
+  rdfs:label "hasCost"@en ;
+  rdfs:comment "Generic hook: costs can belong to cards (play/cast) or abilities (activation/additional costs)."@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range tcg:ResourceCost .
+
+tcg:primaryCost a rdf:Property ;
+  rdfs:label "primaryCost"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:ResourceCost .
+
+tcg:altCost a rdf:Property ;
+  rdfs:label "altCost"@en ;
+  rdfs:domain tcg:Card ;
+  rdfs:range tcg:ResourceCost .
+
+tcg:costKind a rdf:Property ;
+  rdfs:label "costKind"@en ;
+  rdfs:domain tcg:ResourceCost ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:costText a rdf:Property ;
+  rdfs:label "costText"@en ;
+  rdfs:comment "Human-readable cost in game notation (kept even when structured components exist)."@en ;
+  rdfs:domain tcg:ResourceCost ;
+  rdfs:range xsd:string .
+
+tcg:costComponent a rdf:Property ;
+  rdfs:label "costComponent"@en ;
+  rdfs:domain tcg:ResourceCost ;
+  rdfs:range tcg:ResourceCostComponent .
+
+tcg:resourceType a rdf:Property ;
+  rdfs:label "resourceType"@en ;
+  rdfs:domain tcg:ResourceCostComponent ;
+  rdfs:range tcg:ResourceType .
+
+tcg:amountInteger a rdf:Property ;
+  rdfs:label "amountInteger"@en ;
+  rdfs:domain tcg:ResourceCostComponent ;
+  rdfs:range xsd:integer .
+
+tcg:amountText a rdf:Property ;
+  rdfs:label "amountText"@en ;
+  rdfs:domain tcg:ResourceCostComponent ;
+  rdfs:range xsd:string .
+
+# Decklists
+tcg:deckList a rdf:Property ;
+  rdfs:label "deckList"@en ;
+  rdfs:domain tcg:Deck ;
+  rdfs:range tcg:DeckListEntry .
+
+tcg:card a rdf:Property ;
+  rdfs:label "card"@en ;
+  rdfs:domain tcg:DeckListEntry ;
+  rdfs:range tcg:Card .
+
+tcg:cardPrinting a rdf:Property ;
+  rdfs:label "cardPrinting"@en ;
+  rdfs:domain tcg:DeckListEntry ;
+  rdfs:range tcg:CardPrinting .
+
+tcg:quantity a rdf:Property ;
+  rdfs:label "quantity"@en ;
+  rdfs:domain tcg:DeckListEntry ;
+  rdfs:range xsd:integer .
+
+tcg:zoneRole a rdf:Property ;
+  rdfs:label "zoneRole"@en ;
+  rdfs:comment "main / sideboard / commander / extraDeck / etc."@en ;
+  rdfs:domain tcg:DeckListEntry ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:deckFormat a rdf:Property ;
+  rdfs:label "deckFormat"@en ;
+  rdfs:domain tcg:Deck ;
+  rdfs:range tcg:Format .
+
+tcg:deckArchetype a rdf:Property ;
+  rdfs:label "deckArchetype"@en ;
+  rdfs:domain tcg:Deck ;
+  rdfs:range tcg:Archetype .
+
+# Legality
+tcg:inFormatLegality a rdf:Property ;
+  rdfs:label "inFormatLegality"@en ;
+  rdfs:domain tcg:Legality ;
+  rdfs:range tcg:Format .
+
+tcg:appliesTo a rdf:Property ;
+  rdfs:label "appliesTo"@en ;
+  rdfs:comment "Applies to a Card or CardPrinting (or other relevant entity)."@en ;
+  rdfs:domain tcg:Legality ;
+  rdfs:range schema:Thing .
+
+tcg:status a rdf:Property ;
+  rdfs:label "status"@en ;
+  rdfs:domain tcg:Legality ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:effectiveDate a rdf:Property ;
+  rdfs:label "effectiveDate"@en ;
+  rdfs:domain tcg:Legality ;
+  rdfs:range xsd:date .
+
+tcg:source a rdf:Property ;
+  rdfs:label "source"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range schema:URL .
+
+# Metagame
+tcg:strategyTag a rdf:Property ;
+  rdfs:label "strategyTag"@en ;
+  rdfs:domain tcg:Archetype ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:signatureCards a rdf:Property ;
+  rdfs:label "signatureCards"@en ;
+  rdfs:domain tcg:Archetype ;
+  rdfs:range schema:Thing .
+
+tcg:sideA a rdf:Property ;
+  rdfs:label "sideA"@en ;
+  rdfs:domain tcg:Matchup ;
+  rdfs:range tcg:Archetype .
+
+tcg:sideB a rdf:Property ;
+  rdfs:label "sideB"@en ;
+  rdfs:domain tcg:Matchup ;
+  rdfs:range tcg:Archetype .
+
+tcg:advantage a rdf:Property ;
+  rdfs:label "advantage"@en ;
+  rdfs:domain tcg:Matchup ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:winRate a rdf:Property ;
+  rdfs:label "winRate"@en ;
+  rdfs:domain tcg:Matchup ;
+  rdfs:range xsd:decimal .
+
+tcg:sampleSize a rdf:Property ;
+  rdfs:label "sampleSize"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range xsd:integer .
+
+tcg:notes a rdf:Property ;
+  rdfs:label "notes"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range xsd:string .
+
+tcg:counterAgent a rdf:Property ;
+  rdfs:label "counterAgent"@en ;
+  rdfs:domain tcg:CounterClaim ;
+  rdfs:range schema:Thing .
+
+tcg:counterTarget a rdf:Property ;
+  rdfs:label "counterTarget"@en ;
+  rdfs:domain tcg:CounterClaim ;
+  rdfs:range schema:Thing .
+
+tcg:confidence a rdf:Property ;
+  rdfs:label "confidence"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range xsd:decimal .
+
+tcg:effectSize a rdf:Property ;
+  rdfs:label "effectSize"@en ;
+  rdfs:domain tcg:CounterClaim ;
+  rdfs:range xsd:decimal .
+
+tcg:evidence a rdf:Property ;
+  rdfs:label "evidence"@en ;
+  rdfs:domain tcg:CounterClaim ;
+  rdfs:range tcg:EvidenceBundle .
+
+tcg:method a rdf:Property ;
+  rdfs:label "method"@en ;
+  rdfs:domain tcg:EvidenceBundle ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:timeWindowStart a rdf:Property ;
+  rdfs:label "timeWindowStart"@en ;
+  rdfs:domain tcg:EvidenceBundle ;
+  rdfs:range xsd:date .
+
+tcg:timeWindowEnd a rdf:Property ;
+  rdfs:label "timeWindowEnd"@en ;
+  rdfs:domain tcg:EvidenceBundle ;
+  rdfs:range xsd:date .
+
+# Descriptors (LLM interpretation layer)
+tcg:hasDescriptor a rdf:Property ;
+  rdfs:label "hasDescriptor"@en ;
+  rdfs:domain schema:Thing ;
+  rdfs:range tcg:CardDescriptor .
+
+tcg:describesCard a rdf:Property ;
+  rdfs:label "describesCard"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:Card .
+
+tcg:descriptorType a rdf:Property ;
+  rdfs:label "descriptorType"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:DescriptorType .
+
+tcg:descriptorValueTerm a rdf:Property ;
+  rdfs:label "descriptorValueTerm"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:descriptorValueNumber a rdf:Property ;
+  rdfs:label "descriptorValueNumber"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range xsd:decimal .
+
+tcg:descriptorValueText a rdf:Property ;
+  rdfs:label "descriptorValueText"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range xsd:string .
+
+tcg:descriptorInFormat a rdf:Property ;
+  rdfs:label "descriptorInFormat"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:Format .
+
+tcg:descriptorInGame a rdf:Property ;
+  rdfs:label "descriptorInGame"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:CardGame .
+
+tcg:descriptorVsArchetype a rdf:Property ;
+  rdfs:label "descriptorVsArchetype"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:Archetype .
+
+tcg:targetsMechanic a rdf:Property ;
+  rdfs:label "targetsMechanic"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:Mechanic .
+
+tcg:targetsRole a rdf:Property ;
+  rdfs:label "targetsRole"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:Role .
+
+tcg:targetsCounterType a rdf:Property ;
+  rdfs:label "targetsCounterType"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:CounterType .
+
+tcg:polarity a rdf:Property ;
+  rdfs:label "polarity"@en ;
+  rdfs:comment "Positive/negative/neutral; e.g., helpsOwnPlan / disruptsOpponent."@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range schema:DefinedTerm .
+
+tcg:extractionMethod a rdf:Property ;
+  rdfs:label "extractionMethod"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:ExtractionMethod .
+
+tcg:descriptorEvidence a rdf:Property ;
+  rdfs:label "descriptorEvidence"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range tcg:DescriptorEvidence .
+
+tcg:createdAt a rdf:Property ;
+  rdfs:label "createdAt"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range xsd:dateTime .
+
+tcg:createdBy a rdf:Property ;
+  rdfs:label "createdBy"@en ;
+  rdfs:domain tcg:CardDescriptor ;
+  rdfs:range schema:Organization .
